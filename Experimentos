@@ -34,3 +34,58 @@ fun cases(obj: Any) {
 }
 
 class MyClass
+
+
+------------------------------------------
+
+Várias 
+------------------------------------------
+val systemUsers: MutableList<Int> = mutableListOf(1, 2, 3)						// declara uma lista imutável, ou seja, a estrutura da lista não pode ser modificada, mas os dados sim
+val sudoers: List<Int> = systemUsers											// está variável obtem a lista declarada, ou seja, cria uma cópia de "somente leitura"
+
+fun addSystemUser(newUser: Int) {												// função que adiciona o usuário informado quando chamada
+    systemUsers.add(newUser)
+}
+
+fun getSysSudoers(): List<Int> {												// função que retorna a quantidade de usuários listados
+    return sudoers
+}
+
+
+fun main() {
+    addSystemUser(4)															// adição o usuário x ( no caso com ID 4  )
+    addSystemUser(7)															// adição o usuário x ( no caso com ID 7  )
+    addSystemUser(10)															// adição o usuário x ( no caso com ID 10 )
+    getSysSudoers().forEach {													// rotina de repetição "foreach" na lista de usuários atribuindo o ID a variável "i"
+        i -> println("Algumas informações úteis sobre o usuário $i")			// imprime o usuário "i"
+    }
+   	
+    var total: Double
+    total = soma(1.2, 3.4)
+    total = subtrair(total, 2.6)
+    total = multiplica(total, getSysSudoers().size)
+    total = divide(total, 2.0)    
+    impResult(total)
+}
+
+fun soma(a: Double, b: Double): Double {
+    return a + b
+}
+
+fun subtrair(a: Double, b: Double): Double {
+    return a - b
+}
+
+fun multiplica(a: Double, b: Int): Double {
+    return a * b
+}
+
+fun divide(a: Double, b: Double): Double {
+    return a / b
+}
+
+fun impResult(r: Double) {
+    println("Total de usuários: ${getSysSudoers().size}")						// nesta impressão o método de leitura está dentro da string, onde recupera o número total de usuários
+    println()
+    println("Resultado = $r")
+}
