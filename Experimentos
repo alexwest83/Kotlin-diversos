@@ -36,10 +36,10 @@ fun cases(obj: Any) {
 class MyClass
 
 
-------------------------------------------
+------------------------------------------------------------------------------------
 
-Várias 
-------------------------------------------
+Diversos exemplos retirados da documentação oficial do Kotlin
+------------------------------------------------------------------------------------
 val systemUsers: MutableList<Int> = mutableListOf(1, 2, 3)						// declara uma lista imutável, ou seja, a estrutura da lista não pode ser modificada, mas os dados sim
 val sudoers: List<Int> = systemUsers											// está variável obtem a lista declarada, ou seja, cria uma cópia de "somente leitura"
 
@@ -88,4 +88,140 @@ fun impResult(r: Double) {
     println("Total de usuários: ${getSysSudoers().size}")						// nesta impressão o método de leitura está dentro da string, onde recupera o número total de usuários
     println()
     println("Resultado = $r")
+}
+
+------------------------------------------------------------------------------------
+
+Outros exemplos retirados da documentação oficial do Kotlin
+------------------------------------------------------------------------------------
+// classe abstrata com encapsulamento aberto permite extender
+open class Cao {
+    // função com encapsulamento aberto pertite sobrescrever
+    open fun digaOla() {
+        println("au au")
+    }
+}
+
+// herança da classe Cao, permite obrescrever a função
+class BullDog : Cao() {
+    // polimorfismo sobrescreve a função herdada da classe Cao
+    override fun digaOla() {
+        println("half half")
+    }
+}
+
+open class Leao(val name: String, val origin: String) {
+    fun sayHello() {
+        println("$name, o leão da $origin diz: graoh")
+    }
+}
+
+class Asiatic(name: String) : Leao(name = name, origin = "India")
+
+class Australian(name: String) : Leao(name = name, origin = "Austrália")
+
+data class User(val name: String, val id: Int) {
+    override fun equals(other: Any?) = other is User && other.id == this.id
+}
+
+enum class State {
+    IDLE, RUNNING, FINISHED
+}
+
+sealed class Mamifero(val nome: String)
+
+class Gato(val gatoNome: String) : Mamifero(gatoNome)
+class Humano(val humanoNome: String, val trabalho: String) : Mamifero(humanoNome)
+
+fun saudarMamifero(mamifero: Mamifero): String {
+    when (mamifero) {
+        is Humano -> return "Olá ${mamifero.nome}. Você trabalha como ${mamifero.trabalho}"
+        is Gato -> return "Olá ${mamifero.nome}"
+    }
+}
+
+fun main() {
+    /* duas formas de declarar variáveis por inferência ou tipada e instanciação
+     * exemplo por inferência e instanciação direta
+     * 	var cachorro = Cao()
+     * 
+     * exemplo tipada e instanciação direta
+     * 	var cachorro : Cao = Cao()
+     * 
+     * Também é possível declarar a variável primeiro e instanciar de forma separada
+     * neste caso a variável precisa ser tipada, conf ex abaixo
+     * 	var cachorro: Cao
+     * 	cachorro = Cao()
+    */
+    
+    // declara e instancia a classe cachorro
+    var cachorro = Cao()
+    
+    // cachorro diz "au au"
+	cachorro.digaOla()
+    
+    // altera o tipo da classe cachorro
+    cachorro = BullDog()
+    
+    // cachorro do tipo Bulldog diz "half half"
+    cachorro.digaOla()
+	println()
+    
+    
+    val Lion = Asiatic("Rufus")
+    Lion.sayHello()
+    
+    val Leon = Australian("Fred")
+    Leon.sayHello()
+    println()
+    
+    
+    val user = User("Alex", 1)
+    println(user)
+    println(user.name)
+    
+    val secondUser = User("Alex", 1)
+    val thirdUser = User("Max", 2)
+    
+    println("user == secondUser: ${user == secondUser} - user.hashCode: ${user.hashCode()} - secondUser.hashCode: ${secondUser.hashCode()}")
+    println("user == thirdUser: ${user == thirdUser} - user.hashCode: ${user.hashCode()} - thirdUser.hashCode: ${thirdUser.hashCode()}")
+    
+    // hashCode() function
+    println(user.hashCode())
+    println(secondUser.hashCode())
+    println(thirdUser.hashCode())
+    
+    // copy() function
+    println(user.copy())
+    println(user === user.copy())
+    println(user.copy("Max"))
+    println(user.copy(id = 3))
+    
+    println("name = ${user.component1()}")
+    println("id = ${user.component2()}")
+    
+    println("name = ${secondUser.component1()}")
+    println("id = ${secondUser.component2()}")
+    
+    println("name = ${thirdUser.component1()}")
+    println("id = ${thirdUser.component2()}")
+    println()
+    
+    
+    val state = State.RUNNING
+    val mensagem = when (state) {
+        State.IDLE 		-> "Está livre"
+        State.RUNNING 	-> "Está rodando"
+        State.FINISHED 	-> "Está finalizada"
+    }
+    println(mensagem)
+    println()
+    
+    
+    val gato: Gato = Gato("Beny")
+    val humano = Humano("Alexandre", "Programador na Pointer")
+    
+    println(saudarMamifero(gato))
+    println(saudarMamifero(humano))
+    
 }
